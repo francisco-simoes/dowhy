@@ -1,7 +1,7 @@
 import itertools
 import logging
 from enum import Enum
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import sympy as sp
 import sympy.stats as spstats
@@ -874,7 +874,14 @@ def identify_mediation_second_stage_confounders(
     return backdoor_variables_dict
 
 
-def construct_backdoor_estimand(treatment_name: List[str], outcome_name: List[str], common_causes: List[str]):
+def construct_backdoor_estimand(
+    treatment_name: List[str], outcome_name: List[str], common_causes: List[str]
+) -> Dict[str, Any]:
+    """Construct a SymPy object corresponding to the backdoor criterion expression.
+
+    :returns: Dictionary with two keys: "estimand" and "assumptions". The former is a SymPy
+    object, while the latter is a string making explicit what assumptions were made.
+    """
     # TODO: outputs string for now, but ideally should do symbolic
     # expressions Mon 19 Feb 2018 04:54:17 PM DST
     # TODO Better support for multivariate treatments

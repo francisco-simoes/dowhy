@@ -4,20 +4,18 @@ from dowhy.utils.graph_operations import adjacency_matrix_to_adjacency_list
 
 
 class NodePair:
-    """
-    Data structure to store backdoor variables between 2 nodes.
-    """
+    """Data structure to store backdoor variables between 2 nodes."""
 
     def __init__(self, node1, node2):
         self._node1 = node1
         self._node2 = node2
         self._is_blocked = None  # To store if all paths between node1 and node2 are blocked
-        self._condition_vars = []  # To store variable to be conditioned on to block all paths between node1 and node2
-        self._complete = False  # To store to paths between node pair have been completely explored.
+        self._condition_vars = []  # To store variables to be conditioned on to block all paths between node1 and node2
+        self._complete = False  # To store if paths between node pair have been completely explored.
 
     def update(self, path, condition_vars=None):
+        """Argument path is a Path variable."""
         if condition_vars is None:
-            """path is a Path variable"""
             if self._is_blocked is None:
                 self._is_blocked = path.is_blocked()
             else:
